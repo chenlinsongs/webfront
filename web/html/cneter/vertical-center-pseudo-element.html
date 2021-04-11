@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--使用伪元素让元素垂直居中-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+
+    body {
+        background: #f06d06;
+        font-size: 80%;
+    }
+
+    div {
+        background: white;
+        width: 240px;
+        height: 200px;
+        margin: 20px;
+        color: #6d5050;
+        resize: vertical;
+        overflow: auto;
+        /*padding: 20px;*/
+    }
+
+    .ghost-center {
+        position: relative;
+    }
+    .ghost-center::before {
+        content: "d ";
+        display: inline-block;
+        height: 100%;
+        width: 30px;
+        vertical-align: middle;
+    }
+    .ghost-center p {
+        display: inline-block;
+        vertical-align:  middle;
+        width: 190px;
+        margin: 0;
+        paadding: 20px;
+        background: black;
+    }
+</style>
+<div class="ghost-center">
+    <p>I'm vertically centered multiple lines of text in a container. Centered with a ghost pseudo element</p>
+</div>
+</body>
+</html>

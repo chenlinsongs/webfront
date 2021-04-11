@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<style>
+
+    .child {
+        margin-left: 40px;
+    }
+
+    .ol_child{
+        padding-left: 0px;
+    }
+
+    .node p{
+        /*background-color: #dd0202;*/
+        margin: 0px;
+        vertical-align: middle
+    }
+
+    .node img{
+        vertical-align: middle
+    }
+
+    .node{
+        height: 30px;
+        background-color: lemonchiffon;
+        margin: 2px;
+    }
+    .node::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        /*width: 30px;*/
+        margin: 0px;
+        vertical-align: middle;
+    }
+    /*.node div {*/
+    /*    display: inline-block;*/
+    /*    vertical-align:  middle;*/
+    /*    !*margin: 0;*!*/
+    /*    !*paadding: 20px;*!*/
+    /*    !*background: black;*!*/
+    /*}*/
+
+</style>
+
+<div class="navigation"></div>
+
+<script>
+
+    $(document).ready(function() {
+
+        //DOM manipulation code
+        // $('p').click(function (el){
+        //     console.log(el.target.innerText)
+        //     const p = el.target;
+        //     const sibling = $(p).parent().siblings();
+        //     const img = $(p).siblings();
+        //     if (sibling.length > 0){
+        //         const child = sibling[0];
+        //         console.log(child)
+        //         const display = $(child).css('display');
+        //         console.log("display")
+        //         console.log(display)
+        //         if ("DIV" == $(child).prop('nodeName') && "none" != display){
+        //             //close
+        //             console.log("DIV")
+        //             $(child).attr("old-display",display)
+        //             $(child).css('display','none');
+        //             $(img).attr("src","../image/close.png")
+        //
+        //         }else {
+        //             //open
+        //             const oldDisplay = $(child).attr("old-display")
+        //             $(child).css('display',oldDisplay);
+        //             console.log("NOT DIV")
+        //             //获取img,改变img的形状
+        //             $(img).attr("src","../image/open.png")
+        //
+        //         }
+        //
+        //     }else {
+        //         console.log("无孩节点")
+        //     }
+        //
+        //     // alert(el.target.innerText);
+        // });
+
+        const treeJson = [{
+            "name":"123",
+            "child":[
+                {
+                    "name":"234",
+                    "child":[
+                        {
+                            "name":"456",
+                            "child":[
+                                {
+                                    "name":"789",
+                                    "child":[
+
+                                    ]
+                                },
+                                {
+                                    "name":"dfr",
+                                    "child":[
+
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },{
+            "name":"123",
+            "child":[
+                {
+                    "name":"234",
+                    "child":[
+                        {
+                            "name":"456",
+                            "child":[
+                                {
+                                    "name":"789",
+                                    "child":[
+
+                                    ]
+                                },
+                                {
+                                    "name":"dfr",
+                                    "child":[
+
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+        ];
+
+        const $tree = createTree(treeJson)
+        const $navigation = $(".navigation")
+        $tree.appendTo($navigation)
+
+        //DOM manipulation code
+        $('p').click(function (el){
+            console.log(el.target.innerText)
+            const p = el.target;
+            const sibling = $(p).parent().siblings();
+            const img = $(p).siblings();
+            if (sibling.length > 0){
+                const child = sibling[0];
+                console.log(child)
+                const display = $(child).css('display');
+                console.log("display")
+                console.log(display)
+                if ("DIV" == $(child).prop('nodeName') && "none" != display){
+                    //close
+                    console.log("DIV")
+                    $(child).attr("old-display",display)
+                    $(child).css('display','none');
+                    $(img).attr("src","../image/close.png")
+
+                }else {
+                    //open
+                    const oldDisplay = $(child).attr("old-display")
+                    $(child).css('display',oldDisplay);
+                    console.log("NOT DIV")
+                    //获取img,改变img的形状
+                    $(img).attr("src","../image/open.png")
+
+                }
+
+            }else {
+                console.log("无孩节点")
+            }
+
+            // alert(el.target.innerText);
+        });
+
+        function createTree(treeData){
+            const $ol = createOl();
+            for (let i = 0; i < treeData.length; i++){
+                const $li = createLi();
+                const nodeData = treeData[i];
+                const name = nodeData.name;
+                const child = nodeData.child;
+                const haveImg = child.length > 0;
+                const $node = createNode(name,haveImg);
+                $node.appendTo($li)
+                if (child.length > 0){
+                    const $childDiv = createChild();
+                    const $child = createTree(child);
+                    $child.appendTo($childDiv)
+                    $childDiv.appendTo($li)
+                }
+                $li.appendTo($ol)
+            }
+            return $ol;
+
+        }
+
+        function createOl(){
+            const ol = '<ol class="ol_child" style="list-style-type:none;"></ol>'
+            return $(ol);
+        }
+
+        function createLi(){
+            const li = '<li></li>'
+            return $(li)
+        }
+
+        function createChild(){
+            const child = '<div class="child"></div>'
+            return $(child);
+        }
+
+        function createNode(name,haveImg){
+            if (haveImg){
+                const node = '<div class="node">'+
+                    '<img src="../image/close.png" style="display: inline-block;vertical-align: middle"/>'+
+                    '<p class="" style="display: inline-block;">'+name+'</p>'+
+                    '</div>';
+                const $node = $(node);
+                return $node;
+            }else {
+                const node = '<div class="node">'+
+                    '<p style="display: inline-block">'+name+'</p>'+
+                '</div>';
+                const $node = $(node);
+                return $node;
+            }
+        }
+
+
+    });
+</script>
+</body>
+</html>

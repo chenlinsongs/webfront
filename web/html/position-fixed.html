@@ -1,0 +1,54 @@
+
+<style>
+    #rectangle1 {
+        height: 50px;
+        width: 500px;
+        background-color: #eb4d4b;
+        position: absolute;
+    }
+
+    #rectangle2 {
+        height: 50px;
+        width: 500px;
+        background-color: #686de0;
+        position: fixed;
+        top: 100px;
+        left: 400px;
+    }
+
+    .title {
+        color: #f0932b;
+    }
+
+    .parent_element {
+        color: white;
+        width: 260px;
+        height: 260px;
+    }
+
+    body {
+        height: 3000px;
+        background: #1f2021;
+        color: #9a859b;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="parent_element">
+                <div class="rectangle" id="rectangle1">rectangle1 - position: absolute</div>
+                <div class="rectangle" id="rectangle2">rectangle2 - position: fixed</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="title">CSS Position Fixed</h1>
+        </div>
+        <div class="col-lg-6">
+            Fixed positioning is similar to absolute in that the element is removed from the regular document flow. The difference is that elements with fixed positioning are positioned relative to the window. Elements with absolute positioning are positioned relative to the document. Since rectangle2 is using fixed positioning, when you scroll down the page the element remains at 100px from the top of the window not the document!
+            Fixed positioning is similar to absolute in that the element is removed from the regular document flow. The difference is that elements with fixed positioning are positioned relative to the window. Elements with absolute positioning are positioned relative to the document. Since rectangle2 is using fixed positioning, when you scroll down the page the element remains at 100px from the top of the window not the document!
+        </div>
+    </div>
+</div>

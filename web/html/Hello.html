@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<textarea  id="border-resize" style="border-color: cadetblue;border-width: 1px;height:300px;width: 300px;">dss</textarea>
+
+<script>
+    const win = document.defaultView;
+    const cons = win.console
+    cons.log(win == window)
+    cons.log("ddd");
+    window.addEventListener('resize',resizeHandler)
+    var border_resize = document.getElementById("border-resize");
+    window.console.log("ccc")
+
+    function resizeHandler(event){
+        console.log("width:"+win.innerWidth+"  height:"+win.innerHeight)
+        const style = "border-color: cadetblue;border-width: 1px;height:"+(win.innerHeight-30)+"px;width: "+(win.innerWidth-30)+"px;"
+        border_resize.setAttribute("style",style);
+    }
+
+</script>
+
+</body>
+</html>

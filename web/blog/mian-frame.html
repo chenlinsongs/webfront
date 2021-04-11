@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+<body>
+
+<style type="text/css">
+    :root {
+        --ck-sample-editor-min-height: 100%;
+        --ck-sample-editor-height: 100%;
+        --ck-sample-editor-z-index: 0;
+        --ck-z-default: 0
+    }
+
+    @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600");*,*:before,*:after {
+        box-sizing: border-box
+    }
+
+    html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+
+    body,html {
+        font-weight: 400;
+        line-height: 1.6;
+        font-family: "Source Sans Pro",system-ui,Roboto,"Helvetica Neue","Helvetica",Arial,sans-serif;
+        font-size: 15px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        min-height: 100vh;
+        width: 100%;
+        overflow-x: hidden
+    }
+
+    body {
+        padding: 100px 0 0;
+        color: #1a1a1a;
+    }
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    *,*:before,*:after {
+        box-sizing: border-box;
+    }
+
+    .top {
+        background: #3e59ad;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        align-items: center;
+    }
+
+    .top .header__main {
+        padding: .5em 1em;
+        display: flex;
+        justify-content: space-between;
+        background-color: inherit;
+        position: relative;
+        z-index: inherit;
+    }
+
+    .top .header__main-title {
+        display: flex;
+        align-items: center;
+    }
+
+    .top .header__main-title-home {
+        font-size: 1.5em;
+        text-decoration: none;
+        color: #fbfcfc;
+    }
+
+    a {
+        color: #1b3af2;
+        text-decoration: none
+    }
+
+    a:hover {
+        text-decoration: underline
+    }
+
+    .top__search {
+        flex: 0 0 240px;
+        position: relative;
+        align-self: flex-start;
+    }
+
+    .top__search__box {
+        background: #fff;
+        font-weight: 400;
+        font-size: 1rem;
+        height: 40px;
+        width: 240px;
+        border: 0;
+        padding: 0 3.332em 0 1.166em;
+        border-radius: 25px;
+        border: 2px solid transparent;
+    }
+
+    .top__search__box:focus,.top__search__box:active {
+        border-color: #5db913;
+        outline: none;
+        box-shadow: 0 0 5px #5db913
+    }
+    .top__search__button img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .top__search__button {
+        top: 50%;
+        transform: translateY(-50%);
+        width: 15px;
+        height: 17px;
+        position: absolute;
+        right: 1.166em;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    .top .header__sub {
+        height: 45px;
+        display: flex;
+        background: #f5f5f5;
+        border-bottom: 1px solid #f2f5f7;
+        position: relative;
+    }
+
+    .top__menu {
+        display: flex;
+        margin: 0;
+        list-style: none;
+    }
+    .top__menu li {
+        margin-right: 1em;
+    }
+
+    .top__menu li a {
+        display: block;/*a元素默认是inline，高度属性对它没无效，所以设置成block*/
+        font-weight: 600;/*字体的粗细*/
+        text-decoration: none;/*让a元素没有下划线*/
+        background-color: #f5f5f5;
+        color: #555;/*字体颜色*/
+        border-bottom: 2px solid transparent;/*默认下边框是透明的*/
+        position: relative;
+        height: 45px;
+        line-height: 45px;/*对于文本垂直居中的的一种方式，将line-height和height设置成一样的*/
+        padding: 0 1em;/*左右padding*/
+        transition: 150ms ease all;/*当鼠标在某选项时，背景颜色及边框变化的动画及用时*/
+    }
+    .top__menu li a:hover, .top__menu li a.top__menu__item--active {
+        border-color: #3e59ad;
+    }
+
+    .top[data-project='ckeditor5'] li.top__menu-project-logo a {
+        background-image: url("data:image/svg+xml,%3Csvg width='68' height='64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M43.71 11.025a11.508 11.508 0 0 0-1.213 5.159c0 6.42 5.244 11.625 11.713 11.625.083 0 .167 0 .25-.002v16.282a5.464 5.464 0 0 1-2.756 4.739L30.986 60.7a5.548 5.548 0 0 1-5.512 0L4.756 48.828A5.464 5.464 0 0 1 2 44.089V20.344c0-1.955 1.05-3.76 2.756-4.738L25.474 3.733a5.548 5.548 0 0 1 5.512 0l12.724 7.292z' fill='%23FFF'/%3E%3Cpath d='M45.684 8.79a12.604 12.604 0 0 0-1.329 5.65c0 7.032 5.744 12.733 12.829 12.733.091 0 .183-.001.274-.003v17.834a5.987 5.987 0 0 1-3.019 5.19L31.747 63.196a6.076 6.076 0 0 1-6.037 0L3.02 50.193A5.984 5.984 0 0 1 0 45.003V18.997c0-2.14 1.15-4.119 3.019-5.19L25.71.804a6.076 6.076 0 0 1 6.037 0L45.684 8.79zm-29.44 11.89c-.834 0-1.51.671-1.51 1.498v.715c0 .828.676 1.498 1.51 1.498h25.489c.833 0 1.51-.67 1.51-1.498v-.715c0-.827-.677-1.498-1.51-1.498h-25.49.001zm0 9.227c-.834 0-1.51.671-1.51 1.498v.715c0 .828.676 1.498 1.51 1.498h18.479c.833 0 1.509-.67 1.509-1.498v-.715c0-.827-.676-1.498-1.51-1.498H16.244zm0 9.227c-.834 0-1.51.671-1.51 1.498v.715c0 .828.676 1.498 1.51 1.498h25.489c.833 0 1.51-.67 1.51-1.498v-.715c0-.827-.677-1.498-1.51-1.498h-25.49.001zm41.191-14.459c-5.835 0-10.565-4.695-10.565-10.486 0-5.792 4.73-10.487 10.565-10.487C63.27 3.703 68 8.398 68 14.19c0 5.791-4.73 10.486-10.565 10.486v-.001z' fill='%231EBC61' fill-rule='nonzero'/%3E%3Cpath d='M60.857 15.995c0-.467-.084-.875-.251-1.225a2.547 2.547 0 0 0-.686-.88 2.888 2.888 0 0 0-1.026-.531 4.418 4.418 0 0 0-1.259-.175c-.134 0-.283.006-.447.018-.15.01-.3.034-.446.07l.075-1.4h3.587v-1.8h-5.462l-.214 5.06c.319-.116.682-.21 1.089-.28.406-.071.77-.107 1.088-.107.218 0 .437.021.655.063.218.041.413.114.585.218s.313.244.422.419c.109.175.163.391.163.65 0 .424-.132.745-.396.961a1.434 1.434 0 0 1-.938.325c-.352 0-.656-.1-.912-.3-.256-.2-.43-.453-.523-.762l-1.925.588c.1.35.258.664.472.943.214.279.47.514.767.706.298.191.63.339.995.443.365.104.749.156 1.151.156.437 0 .86-.064 1.272-.193.41-.13.778-.323 1.1-.581a2.8 2.8 0 0 0 .775-.981c.193-.396.29-.864.29-1.405h-.001z' fill='%23FFF' fill-rule='nonzero'/%3E%3C/g%3E%3C/svg%3E")
+    }
+
+    .top__menu li.top__menu-project-logo a {
+        padding-left: 65px;
+        background-size: 38px;/*设置背景图片的大小，注意的背景图片*/
+        background-repeat: no-repeat;/*不要让背景图重复出现*/
+        background-color: #f5f5f5;
+        background-position: 1.166em 5px;
+        border-bottom: 0;
+    }
+
+    /*鼠标选择选项时，背景稍微变化一下*/
+    .top__menu li a:hover {
+        background-color: #eee
+    }
+
+    .top__menu li a.top__menu-github-link:hover {
+        border-color: transparent
+    }
+
+    .top__menu li a.top__menu-github-link svg {
+        fill: currentColor;
+        width: 30px;
+        margin-top: 7.5px
+    }
+
+    .main {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;/*表示子项目在一条线上，即使超出容器，也不会换成多行*/
+        min-height: calc( 100vh - 100px);
+    }
+
+    .main .side-navigation {
+        flex: 0 0 340px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 340px;
+    }
+
+    .main .main__content {
+        background: #fff;
+        max-width: 100%;
+        min-width: 690px;
+        flex: 1;
+        padding: 1.666em 0 3.999em;
+        position: relative;
+    }
+
+    @media only screen and (min-width: 960px) and (max-width: 1024px){
+        .main .main__content {
+            max-width: calc( 100% - 340px );
+            min-width: auto;
+        }
+    }
+
+    .main .side-navigation__wrapper {
+        background: #fff;
+        height: calc( 100% - 100px);
+        display: flex;
+        position: fixed;
+    }
+
+    .main .side-navigation__inner {
+        width: 340px;
+        padding: 1em 0;
+        border-right: 1px solid #f2f5f7;
+        overflow-y: auto;/*内容高度超过父元素长度时，可以滚动*/
+        transition: 250ms ease margin;
+        overflow-x: auto;/*内功宽度超过父元素宽度时，隐藏超过的部分*/
+    }
+
+    .tree li .tree__item__text {
+        display: inline-block;
+        padding: .25em 0;
+        position: relative;
+    }
+
+    @media only screen and (min-width: 960px){
+        .tree li .tree__item__text {
+            margin-left: 2.915em;
+        }
+    }
+
+    .tree li .tree__item__text::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 13px;
+        height: 13px;
+        display: inline-block;
+        margin-left: -1.5em;
+        margin-right: .5em;
+        background-repeat: no-repeat;
+    }
+
+    .tree__item--folder::before {
+        background-image: url("https://ckeditor.com/docs/assets/1.6.6/img/folder.svg");
+    }
+
+    .tree__item--guide::before {
+        background-image: url("https://ckeditor.com/docs/assets/1.6.6/img/book.svg");
+    }
+
+    .tree li a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .tree li .tree__item__wrapper:hover {
+        background-color: #f5f5f5
+    }
+
+    .tree li .tree__item__wrapper--active {
+        overflow: hidden;
+        background-color: #f2f5f7
+    }
+
+    .tree li .tree__item__wrapper--active:hover {
+        background-color: #e9eef1
+    }
+
+    .tree li .tree__item-nested-list--hidden {
+        height: 0;
+        overflow: hidden
+    }
+
+    @media only screen and (min-width: 300px) {
+        .tree li::before {
+            left:calc( 1.166em - 8px)
+        }
+
+        /*树形结构缩放效果*/
+        .tree li .tree__item__text {
+            margin-left: 2.915em;
+        }
+
+        .tree li li::before {
+            left: calc( 2.332em - 8px);
+        }
+
+        .tree li li .tree__item__text {
+            margin-left: 4.081em;
+        }
+
+        .tree li li li::before {
+            left: calc( 3.498em - 8px)
+        }
+
+        .tree li li li .tree__item__text {
+            margin-left: 5.247em
+        }
+
+        .tree li li li li::before {
+            left: calc( 4.664em - 8px)
+        }
+
+        .tree li li li li .tree__item__text {
+            margin-left: 6.413em
+        }
+
+        .tree li li li li li::before {
+            left: calc( 5.83em - 8px)
+        }
+
+        .tree li li li li li .tree__item__text {
+            margin-left: 7.579em
+        }
+
+        .tree li li li li li li::before {
+            left: calc( 6.996em - 8px)
+        }
+
+        .tree li li li li li li .tree__item__text {
+            margin-left: 8.745em
+        }
+
+        .tree li li li li li li li::before {
+            left: calc( 8.162em - 8px)
+        }
+
+        .tree li li li li li li li .tree__item__text {
+            margin-left: 9.911em
+        }
+    }
+
+    #editor {
+        width: 100%;
+        height: 100%;
+        /*overflow-x: hidden;*/
+    }
+    #editor {
+        position: relative;
+    }
+
+    .feedback-widget {
+        border-top: 1px solid #e9e9e9;
+        margin-top: 1.5em;
+        padding-top: 3em;
+    }
+
+    .main__content-inner{
+        height: 100%;
+    }
+
+    @media only screen and (max-width: 1360px) {
+        .main .main__content-inner {
+            /*max-width:860px;*/
+            width:auto;
+            padding-left: 50px;
+            padding-right: 50px
+        }
+    }
+
+    @media only screen and (min-width: 1360px) {
+        .main .main__content-inner {
+            width:auto;
+            margin-left: 50px;
+            margin-right: 50px
+        }
+    }
+
+    @media only screen and (min-width: 1600px) {
+        .main .main__content-inner {
+            /*width:960px;*/
+            width:auto;
+            margin-left: 50px;
+            margin-right: 50px
+        }
+    }
+
+    @media only screen and (max-width: 960px) {
+        .main .main__content-inner {
+            /*max-width:100%;*/
+            width:auto;
+            padding-left: 50px;
+            padding-right: 50px
+        }
+    }
+
+    @media only screen and (max-width: 640px) {
+        .main .main__content-inner {
+            padding-left: 50px;
+            padding-right: 50px
+        }
+    }
+
+    /* --------- EDITOR STYLES  ---------------------------------------------------------------------------------------- */
+
+    .editor__editable,
+        /* Classic build. */
+    main .ck-editor[role='application'] .ck.ck-content,
+        /* Decoupled document build. */
+    .ck.editor__editable[role='textbox'],
+    .ck.ck-editor__editable[role='textbox'],
+        /* Inline & Balloon build. */
+    .ck.editor[role='textbox'] {
+        width: 100%;
+        background: #fff;
+        font-size: 1em;
+        line-height: 1.6em;
+        min-height: var(--ck-sample-editor-min-height);
+        padding: 1.5em 2em;
+    }
+
+    .ck.ck-editor__editable {
+        background: #fff;
+        border: 1px solid hsl(0, 0%, 70%);
+        width: 100%;
+    }
+
+    .ck.ck-editor {
+        /* To enable toolbar wrapping. */
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Because of sidebar `position: relative`, Edge is overriding the outline of a focused editor. */
+    .ck.ck-editor__editable {
+        position: relative;
+        z-index: var(--ck-sample-editor-z-index);
+    }
+
+    .ck.ck-dropdown .ck-dropdown__arrow {
+        pointer-events: none;
+        z-index: var(--ck-z-default);
+    }
+
+    .ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+        z-index: 2;
+        position: fixed;
+        top: 100px
+    }
+    .ck.ck-editor__main{
+        z-index: 0;
+    }
+
+    /*.ck.ck-sticky-panel .ck-sticky-panel__content_sticky {*/
+    /*    z-index: 999;*/
+    /*    position: fixed;*/
+    /*    top: 100px*/
+    /*}*/
+
+</style>
+
+<header class="top" data-project="ckeditor5">
+    <div class="header__main">
+        <div class="header__main-title">
+            <a class="header__main-title-home" href="../../../../index.html">CKEditor Ecosystem Documentation</a>
+        </div>
+        <div class="top__search">
+            <input class="top__search__box ds-input" type="text" id="docsearch_input" placeholder="Search in CKEditor 5"
+                    style="position: relative; vertical-align: top;">
+            <div class="top__search__button">
+                <img src="../image/loupe.svg">
+            </div>
+        </div>
+    </div>
+    <div class="header__sub">
+        <ul class="top__menu">
+            <li class="top__menu-project-logo"><a href="../../index.html">CKEditor5</a></li>
+            <li><a class="top__menu__item--active" href="../index.html">Builds</a></li>
+            <li><a href="../../framework/index.html">Framework</a></li>
+            <li><a href="../../examples/index.html">Examples</a></li>
+            <li><a href="../../features/index.html">Features</a></li>
+            <li><a class="top__menu__api" href="../../api/index.html">API</a></li>
+            <li><a class="top__menu-github-link" href="https://github.com/ckeditor/ckeditor5" target="_blank" title="CKEditor 5 on GitHub.">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12">
+                    </path>
+                </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+
+<main class="main">
+    <section class="main__content formatted">
+        <div class="main__content-inner">
+            <div id="editor" class="editor"></div>
+            <div class="feedback-widget"></div>
+        </div>
+    </section>
+    <div class="side-navigation">
+        <div class="side-navigation__wrapper">
+            <nav class="side-navigation__inner">
+                <ul class="tree guide-tree">
+                    <li>
+                        <div class="tree__item__wrapper">
+                            <span class="tree__item--folder tree__item__text">Guides</span>
+                        </div>
+                        <ul class="tree__item-nested-list">
+                            <li>
+                                <a href="mian-frame.html">
+                                    <div class="tree__item__wrapper tree__item__wrapper--active">
+                                        <span class="tree__item--guide tree__item__text">Overview</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="tree__item__wrapper">
+                                    <span class="tree__item--folder tree__item__text">Integration</span>
+                                </div>
+                                <ul class="tree__item-nested-list">
+                                    <li>
+                                        <a href="mian-frame.html">
+                                            <div class="tree__item__wrapper tree__item-nested-list--hidden">
+                                                <span class="tree__item--guide tree__item__text">Installation</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</main>
+
+<script src="./build/ckeditor.js"></script>
+<script>ClassicEditor
+    .create( document.querySelector( '.editor' ), {
+        // plugins: [ 'imageUpload' ],
+        toolbar: {
+            items: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'link',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'outdent',
+                'indent',
+                '|',
+                'imageUpload',
+                'blockQuote',
+                'insertTable',
+                'mediaEmbed',
+                'undo',
+                'redo'
+            ],
+            // viewportTopOffset: 30,
+        },
+        language: 'zh-cn',
+        image: {
+            toolbar: [
+                'imageTextAlternative',
+                'imageStyle:full',
+                'imageStyle:side',
+                'linkImage'
+            ]
+        },
+        table: {
+            contentToolbar: [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells'
+            ]
+        },
+        // simpleUpload: {
+        //     // The URL that the images are uploaded to.
+        //     uploadUrl: 'http://localhost:8081/ckeditor/image-upload',
+        //
+        //     // Enable the XMLHttpRequest.withCredentials property.
+        //     withCredentials: false,
+        //
+        //     // Headers sent along with the XMLHttpRequest to the upload server.
+        //     headers: {
+        //         'X-CSRF-TOKEN': 'CSRF-Token',
+        //         Authorization: 'Bearer JSON Web Token'
+        //     }
+        // },
+        ckfinder: {
+            uploadUrl: "http://localhost:8081/ckeditor/image-upload"
+        },
+        licenseKey: '',
+
+
+    } )
+    .then( editor => {
+        window.editor = editor;
+
+    } )
+    .catch( error => {
+        console.error( 'Oops, something went wrong!' );
+        console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+        console.warn( 'Build id: odzxuuijztid-nohdljl880ze' );
+        console.error( error );
+    } );
+</script>
+
+
+
+</body>
+</html>

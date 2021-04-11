@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<style>
+
+    .child {
+        margin-left: 40px;
+    }
+
+    .ol_child{
+        padding-left: 0px;
+    }
+
+    .node p{
+        /*background-color: #dd0202;*/
+        margin: 0px;
+    }
+
+    .node{
+        height: 30px;
+        background-color: lemonchiffon;
+        margin: 2px;
+    }
+    .node::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        /*width: 30px;*/
+        margin: 0px;
+        vertical-align: middle;
+    }
+    /*.node div {*/
+    /*    display: inline-block;*/
+    /*    vertical-align:  middle;*/
+    /*    !*margin: 0;*!*/
+    /*    !*paadding: 20px;*!*/
+    /*    !*background: black;*!*/
+    /*}*/
+
+</style>
+
+<ol style="list-style-type:none;">
+    <li>
+        <div class="node">
+            <img src="../image/close.png" style="display: inline-block"/>
+            <p class="" style="display: inline-block">d1</p>
+        </div>
+        <div class="child">
+            <ol class="ol_child" style="list-style-type:none;">
+                <li>
+                    <div class="node">
+                        <img src="../image/close.png" style="display: inline-block"/>
+                        <p style="display: inline-block">d11</p>
+                    </div>
+                    <div class="child">
+                        <ol class="ol_child" style="list-style-type:none;">
+                            <li>
+                                <div class="node">
+                                    <img src="../image/close.png" style="display: inline-block"/>
+                                    <p style="display: inline-block">d111</p>
+                                </div>
+                                <div class="child">
+                                    <ol class="ol_child" style="list-style-type:none;">
+                                        <li class="ll21">
+                                            <div class="node">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p style="display: inline-block">d1111</p>
+                                            </div>
+
+                                        </li>
+                                        <li class="ll22">
+                                            <div class="node">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p style="display: inline-block">d1111</p>
+                                            </div>
+
+                                        </li>
+                                        <li>
+                                            <div class="node">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p style="display: inline-block">d1111</p>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="node">
+                                    <p style="display: inline-block">d112</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </li>
+            </ol>
+
+        </div>
+    </li>
+    <li>
+        <div class="node">
+            <p style="display: inline-block">d1</p>
+        </div>
+    </li>
+    <li>
+        <div class="node">
+            <p style="display: inline-block">d2</p>
+        </div>
+    </li>
+</ol>
+
+<script>
+
+    $(document).ready(function() {
+
+        //DOM manipulation code
+        $('p').click(function (el){
+            console.log(el.target.innerText)
+            const p = el.target;
+            const sibling = $(p).parent().siblings();
+            const img = $(p).siblings();
+            if (sibling.length > 0){
+                const child = sibling[0];
+                console.log(child)
+                const display = $(child).css('display');
+                console.log("display")
+                console.log(display)
+                if ("DIV" == $(child).prop('nodeName') && "none" != display){
+                    //close
+                    console.log("DIV")
+                    $(child).attr("old-display",display)
+                    $(child).css('display','none');
+                    $(img).attr("src","../image/close.png")
+
+                }else {
+                    //open
+                    const oldDisplay = $(child).attr("old-display")
+                    $(child).css('display',oldDisplay);
+                    console.log("NOT DIV")
+                    //获取img,改变img的形状
+                    $(img).attr("src","../image/open.png")
+
+                }
+
+            }else {
+                console.log("无孩节点")
+            }
+
+            // alert(el.target.innerText);
+        });
+
+    });
+</script>
+</body>
+</html>

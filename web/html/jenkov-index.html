@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=1">
+
+    <title>Jenkov.com</title>
+
+    <meta name="twitter:image:src" content="http://tutorials.jenkov.com/images/teaser500-300-tutorials.png">
+    <meta property="og:image" content="http://tutorials.jenkov.com/images/teaser500-300-tutorials.png"/>
+
+    <meta name="google-site-verification" content="i_TwzdElg-by5uXLvyAjuIaCjxo0yjtW8LdRPUDEEcw" />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4036229-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-4036229-3', {
+         cookie_expires: 0
+      });
+    </script>
+    -->
+</head>
+
+<body>
+
+<style>
+body {background-color: #f0f0f0; xbackground-image: linear-gradient(180deg, #f0f0f0, #e0e0e0); margin: 0px; font-family: arial;}
+
+.grid {
+  display: grid;
+  width: 100%;
+}
+.topBar {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 12;
+  background-color: #000000;
+  color: #ffffff;
+  height: 64px;
+  box-shadow: 0px 8px 6px -6px #999999;
+}
+.site-menu {
+  grid-row-start: 2;
+  grid-row-end: 8;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  xgrid-row-start: 1;
+  /*xgrid-row-end: 2;*/
+
+  /*xborder: 1px solid #cccccc;*/
+  /*display: hidden;*/
+}
+
+.category {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  xborder: 1px solid #cccccc;
+}
+
+.content {
+  grid-column-start: 2;
+  grid-column-end: 10;
+  xborder: 1px solid #cccccc;
+}
+
+.right {
+  grid-row-start: 2;
+  grid-row-end: 14;
+  grid-column-start: 10;
+  grid-column-end: 12;
+  /*xborder: 1px solid #cccccc;*/
+}
+
+
+.footer {
+  grid-row-start: 14;
+  grid-row-end: 15;
+  grid-column-start: 1;
+  grid-column-end: 12;
+  background-color: #000000;
+  color: #ffffff;
+  height: 64px;
+  box-shadow: 0px 8px 6px -6px #999999;
+  height: 64px;
+  position: relative;
+}
+
+#footerCopyright {
+	position: absolute;
+	/*top: 20px;*/
+	/*left:20px;*/
+    right: 20px;
+    bottom: 20px;
+}
+
+#websiteTitle { grid-column-start: 2; grid-column-end: 10; grid-row-start: 2; grid-row-end: 3; }
+#java-jvm { grid-column-start: 2; grid-column-end: 10; }
+
+#javaSE1 { grid-column-start: 2; grid-column-end: 4; }
+#javaSE2 { grid-column-start: 4; grid-column-end: 6; }
+#javaDesktop { grid-column-start: 6; grid-column-end: 8; }
+#javaHowto { grid-column-start: 8; grid-column-end: 10; }
+#buildTools { grid-column-start: 2; grid-column-end: 4; }
+#javaHighPerformance { grid-column-start: 4; grid-column-end: 6; }
+#javaEE { grid-column-start: 6; grid-column-end: 8; }
+#scala { grid-column-start: 8; grid-column-end: 10; }
+
+#webTitle { grid-column-start: 2; grid-column-end: 10; }
+
+#webRia { grid-column-start: 2; grid-column-end: 4; }
+#distributedSystems { grid-column-start: 4; grid-column-end: 6; }
+#server { grid-column-start: 6; grid-column-end: 8; }
+#dataFormats { grid-column-start: 8; grid-column-end: 10; }
+#android { grid-column-start: 2; grid-column-end: 4; }
+
+#miscTitle { grid-column-start: 2; grid-column-end: 10; }
+
+#softwareDevelopment { grid-column-start: 2; grid-column-end: 4; }
+#dataScience { grid-column-start: 4; grid-column-end: 6; }
+#developmentTools { grid-column-start: 6; grid-column-end: 8; }
+#softwareEntrepreneurship { grid-column-start: 8; grid-column-end: 10; }
+#opinion { grid-column-start: 2; grid-column-end: 4; }
+#relatedResources { grid-column-start: 4; grid-column-end: 6; }
+
+.card{ background-color: #ffffff; box-shadow: 0px 8px 6px -6px #999999;padding: 20px 30px;border: 1px solid #e0e0e0; margin: 8px 4px;}
+.cardLeft  { margin-left:   8px; }
+.cardRight { margin-right:  8px; }
+.cardTop   { margin-top:    8px; }
+.cardBottom{ margin-bottom: 8px; }
+
+.categoryBlock  { margin: 8px; background-color: #ffffff; padding: 20px; box-shadow: 0px 8px 6px -6px #999999; }
+.categoryHeader { font-size: 1.2em; font-weight: bold; border-bottom: 2px solid #000000; margin-bottom: 4px; }
+.bigCategory    { font-size: 1.6em; text-align: center; text-shadow: 0px 3px 4px #aaaaaa; }
+.title          { font-size: 2em;}
+
+#topBarMenu    { position: absolute; top: 20px; left: 20px; }
+#topBarMenu a  { color: #ffffff; text-decoration: none; }
+#topBarLogoBox { text-align: right; padding-top:6px; margin-right: 16px;}
+#topBarLogo    { borderx: 1px solid #cccccc; height: 38px; }
+#topBarPhrase  { padding-right: 4px; font-size: 0.8em; }
+
+
+
+a { text-decoration: none; color: #333399; font-weight: bold; }
+</style>
+
+<style>
+@media only screen and (max-width: 960px) {
+	.site-menu  { display: none; }
+}
+
+@media only screen and (max-width: 1200px) {
+	/*.right { grid-row-start: 2; grid-row-end: 16; }*/
+
+	.footer {
+        grid-row-start: 18;
+        grid-row-end: 19;
+    }
+
+    #websiteTitle { grid-column-start: 2; grid-column-end: 10; grid-row-start: 2; grid-row-end: 3; }
+    #java-jvm { grid-column-start: 2; grid-column-end: 10; }
+
+    #javaSE1 { grid-column-start: 2; grid-column-end: 6; }
+    #javaSE2 { grid-column-start: 6; grid-column-end: 10; }
+    #javaDesktop { grid-column-start: 2; grid-column-end: 4; }
+    #javaHowto { grid-column-start: 6; grid-column-end: 10; }
+    #buildTools { grid-column-start: 2; grid-column-end: 6; }
+    #javaHighPerformance { grid-column-start: 6; grid-column-end: 10; }
+    #javaEE { grid-column-start: 2; grid-column-end: 6; }
+    #scala { grid-column-start: 6; grid-column-end: 10; }
+
+    #webTitle { grid-column-start: 2; grid-column-end: 10; }
+
+    #webRia { grid-column-start: 2; grid-column-end: 6; }
+    #distributedSystems { grid-column-start: 6; grid-column-end: 10; }
+    #server { grid-column-start: 2; grid-column-end: 6; }
+    #dataFormats { grid-column-start: 6; grid-column-end: 10; }
+    #android { grid-column-start: 2; grid-column-end: 6; }
+
+    #miscTitle { grid-column-start: 2; grid-column-end: 10; }
+
+    #softwareDevelopment { grid-column-start: 2; grid-column-end: 6; }
+    #dataScience { grid-column-start: 6; grid-column-end: 10; }
+    #developmentTools { grid-column-start: 2; grid-column-end: 6; }
+    #softwareEntrepreneurship { grid-column-start: 6; grid-column-end: 10; }
+    #opinion { grid-column-start: 2; grid-column-end: 6; }
+    #relatedResources { grid-column-start: 6; grid-column-end: 10; }
+
+}
+
+
+
+@media only screen and (min-width: 961px) and (max-width: 1200px) {
+	xbody { background-color: #ffcccc; }
+}
+
+@media only screen and (min-width: 1201px) {
+	xbody { background-color: #ccccff; }
+}
+
+
+</style>
+<div id="grid" class="grid">
+
+    <div class="topBar">
+
+        <div id="topBarMenu">
+            <a href="http://tutorials.jenkov.com" title="Tutorials">Tutorials</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://jenkov.com/about/index.html" title="Tutorials">About</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="http://jenkov.com/rss.xml" title="RSS">RSS</a>
+        </div>
+
+        <div id="topBarLogoBox">
+            <div id="topBarLogo"><svg x="0px" y="0px" width="409px" height="48px" viewBox="0 0 409 100" style="enable-background:new 0 0 409 100;" xml:space="preserve">  <path d="M53,32 l10,0  l0,26  c-7,21 -30,21 -53,10  l4,-9  c18,11 33,10 39,-3  z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M69,32 l50,0  l0,9  l-50,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M69,49 l50,0  l0,9  l-50,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M69,65 l50,0  l0,9  l-50,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M126,32 l13,0  l40,31  l0,-31  l10,0  l0,42  l-10,0 l-43,-32 l0,32 l-10,0 z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M179,32  l10,0  l0,15 l5,0  l32.5,-14.5  l19,0  l-41,19  l40,22  l-19,0  l-33,-18  l-3.5,0  l0,19  l-10,0 z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M238,49  c10,-24 60,-24 70,0  l-11,0  c-10,-12 -38,-12 -48,0  z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M238,57  c10,24 60,24 70,0  l-11,0  c-10,12 -38,12 -48,0  z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M304,32  l13,0  l25,34 l25,-34  l13,0  l-32,42 l-12.5,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M369,65  l12,0 l0,8 l-12,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M390,53  c3,-27 54,-27 67,-10  l-15,0  c-10,-5 -40,-5 -41.5,10 l-10,0  " style="stroke: none;  stroke-width: 1; fill: #ffffff;"></path>  <path d="M390,53  c3,27 54,27 67,10  l-15,0  c-10,5 -40,5 -41.5,-10 l-10,0  " style="stroke: none;  stroke-width: 1; fill: #ffffff;"></path>  <path d="M460,49  c10,-24 60,-24 70,0  l-11,0  c-10,-12 -38,-12 -48,0  z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M460,57  c10,24 60,24 70,0  l-11,0  c-10,12 -38,12 -48,0  z " style="stroke: none; stroke-width: 1; fill: #ffffff;"></path>  <path d="M534,34  l10,0  l0,6 c13,-10 26,-10 37,0  c12,-10 32,-10 39,3  l0,30  l-10,0  l0,-27  c-3,-9 -24,-9 -28,3 l0,24  -10,0  l0,-27  c-3,-9 -24,-9 -28,3 l0,24  -10,0 z" style="stroke: none; stroke-width: 1; fill: #ffffff;"></path></svg></div>
+            <div id="topBarPhrase">Tech and Media Labs</div>
+        </div>
+
+    </div>
+
+
+    <div class="site-menu">
+
+        <div class="card cardLeft cardTop">Tutorial Themes
+            <ul>
+                <li><a href="#java-jvm">Java &amp; JVM</a></li>
+                <li><a href="#web">Web - Distributed Systems - Mobile</a></li>
+                <li><a href="#misc">Miscellaneous</a></li>
+            </ul>
+        </div>
+
+        <!--
+          <div class="card cardLeft">Data Science
+            <ul>
+              <li>Statistics</li>
+              <li></li>
+              <li>Mid 3</li>
+            </ul>
+        </div>
+
+          <div class="card cardLeft">Technopreneurship
+            <ul>
+              <li>Mid 1</li>
+              <li>Mid 2</li>
+              <li>Mid 3</li>
+            </ul>
+        </div>
+        -->
+
+        <div class="card cardLeft cardBottom">About Jenkov.com
+            <ul>
+                <li><a href="http://jenkov.com/about/index.html">About Jenkov.com</a></li>
+                <li><a href="http://tutorials.jenkov.com">Tutorials</a></li>
+                <li><a href="http://jenkov.com/rss.xml">RSS</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!--
+    <div class="category">
+        <div class="card cardTop cardBottom">Category
+
+          <ul>
+            <li>Mid 1</li>
+            <li>Mid 2</li>
+            <li>Mid 3</li>
+          </ul>
+      </div>
+    </div>
+    -->
+
+
+
+
+        <div id="websiteTitle" class="bigCategory card">Tutorials for Software Developers and Technopreneurs</div>
+        <a name="java-jvm"></a>
+        <div id="java-jvm" class="bigCategory card">Java - JVM</div>
+
+        <div id="javaSE1" class="categoryBlock">
+            <div class="categoryHeader">Java SE</div>
+            <a href="java/index.html">Java Language &nbsp;&nbsp;</a><br/>
+            <a href="java-collections/index.html">Java Collections &nbsp;&nbsp;</a><br/>
+            <a href="java-concurrency/index.html">Java Concurrency &nbsp;&nbsp;</a><br/>
+            <a href="java-cryptography/index.html">Java Cryptography &nbsp;&nbsp;</a><br/>
+            <a href="java-util-concurrent/index.html">Java.util.concurrent &nbsp;&nbsp;</a> <br/>
+            <a href="java-date-time/index.html">Java Date and Time &nbsp;&nbsp;</a>  <br/>
+            <a href="java-exception-handling/index.html">Java Exception Handling &nbsp;&nbsp;</a>   <br/>
+            <a href="java-generics/index.html">Java Generics &nbsp;&nbsp;</a> <br/>
+            <a href="java-internationalization/index.html">Java Internationalization &nbsp;&nbsp;</a> <br/>
+            <a href="java-io/index.html">Java IO &nbsp;&nbsp;</a> <br/>
+            <a href="jdbc/index.html">Java JDBC &nbsp;&nbsp;</a> <br/>
+        </div>
+
+        <div id="javaSE2" class="categoryBlock">
+            <div class="categoryHeader">Java SE</div>
+            <a href="java-json/index.html">Java JSON &nbsp;&nbsp;</a> <br/>
+            <a href="java-logging/index.html">Java Logging &nbsp;&nbsp;</a> <br/>
+            <a href="java-multithreaded-servers/index.html">Java Multithreaded Servers &nbsp;&nbsp;</a> <br/>
+            <a href="java-networking/index.html">Java Networking &nbsp;&nbsp;</a> <br/>
+            <a href="java-nio/index.html">Java NIO &nbsp;&nbsp;</a> <br/>
+            <a href="java-persistence/index.html">Java Persistence &nbsp;&nbsp;</a> <br/>
+            <a href="java-reflection/index.html">Java Reflection &nbsp;&nbsp;</a>  <br/>
+            <a href="java-regex/index.html">Java Regular Expressions (regex) &nbsp;&nbsp;</a>  <br/>
+            <a href="java-xml/index.html">Java XML &nbsp;&nbsp;</a> <br/>
+            <a href="java-zip/index.html">Java ZIP &nbsp;&nbsp;</a> <br/>
+        </div>
+
+        <div id="javaDesktop" class="categoryBlock">
+            <div class="categoryHeader">Java Desktop</div>
+            <a href="javafx/index.html">JavaFX &nbsp;&nbsp;</a><br/>
+
+        </div>
+
+        <div id="javaHowto" class="categoryBlock">
+            <div class="categoryHeader">Java Howtos</div>
+            <a href="java-functional-programming/index.html">Java Functional Programming</a><br/>
+            <a href="java-unit-testing/index.html">Java Unit Testing &nbsp;&nbsp;</a><br/>
+            <a href="java-howto/index.html">Java How To's and Utilities &nbsp;&nbsp;</a> <br/>
+            <a href="java-itext/index.html">Java PDF Generation with IText &nbsp;&nbsp;</a>  <br/>
+            <a href="acme4j/index.html">Acme4J &nbsp;&nbsp;</a>  <br/>
+
+            <br/>
+            <a href="butterfly-container/index.html">Butterfly DI Container &nbsp;&nbsp;</a>  <br/>
+            <a href="modrun/index.html">ModRun &nbsp;&nbsp;</a>  <br/>
+
+
+        </div>
+
+
+        <div id="buildTools" class="categoryBlock">
+            <div class="categoryHeader">Build Tools</div>
+
+            <a href="ant/ant-tutorial.html">Ant &nbsp;&nbsp;</a><br/>
+            <a href="maven/maven-tutorial.html">Maven &nbsp;&nbsp;</a><br/>
+            <a href="gradle/gradle-tutorial.html">Gradle &nbsp;&nbsp;</a><br/>
+            <a href="docker/index.html">Docker &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="javaHighPerformance" class="categoryBlock">
+            <div class="categoryHeader">Java - High Performance</div>
+            <a href="java-performance/index.html">Java Performance &nbsp;&nbsp;</a> <br/>
+            <a href="netty/index.html">Netty &nbsp;&nbsp;</a> <br/>
+            <a href="vert.x/index.html">Vert.x &nbsp;&nbsp;</a> <br/>
+            <a href="qbit/index.html">QBit &nbsp;&nbsp;</a> <br/>
+            <a href="jctools/index.html">JCTools &nbsp;&nbsp;</a> <br/>
+            <a href="chronicle/index.html">Chronicle &nbsp;&nbsp;</a> <br/>
+            <a href="mem-ops-java/index.html">Mem Ops for Java &nbsp;&nbsp;</a> <br/>
+            <a href="rion-ops-java/index.html">RION Ops for Java &nbsp;&nbsp;</a> <br/>
+            <a href="stream-ops-java/index.html">Stream Ops for Java &nbsp;&nbsp;</a> <br/>
+        </div>
+
+        <div id="javaEE" class="categoryBlock">
+            <div class="categoryHeader">Java EE</div>
+            <a href="java-web-apps/index.html">Java Web Apps &nbsp;&nbsp;</a> <br/>
+            <a href="java-servlets/index.html">Java Servlets &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="scala" class="categoryBlock">
+            <div class="categoryHeader">Scala</div>
+            <a href="scala/index.html">Scala Language &nbsp;&nbsp;</a><br/>
+        </div>
+
+
+        <a name="web"></a>
+        <div id="webTitle" class="bigCategory card">Web - Distributed Systems - Mobile</div>
+
+        <div id="webRia" class="categoryBlock">
+            <div class="categoryHeader">Web & RIA</div>
+
+            <a href="css/index.html">CSS &nbsp;&nbsp;</a><br/>
+            <a href="html4/index.html">HTML4 &nbsp;&nbsp;</a><br/>
+            <a href="html5/index.html">HTML5 &nbsp;&nbsp;</a><br/>
+            <a href="html5-canvas/index.html">HTML5 Canvas &nbsp;&nbsp;</a><br/>
+            <a href="svg/index.html">SVG - Scalable Vector Graphics &nbsp;&nbsp;</a><br/>
+            <a href="responsive-mobile-friendly-web-design/index.html">Responsive, Mobile Friendly Web Design &nbsp;&nbsp;</a><br/>
+            <a href="vuejs/index.html">Vue.js &nbsp;&nbsp;</a><br/>
+            <a href="riotjs/index.html">Riot.js &nbsp;&nbsp;</a><br/>
+            <a href="jquery/index.html">jQuery &nbsp;&nbsp;</a><br/>
+            <a href="angularjs/index.html">AngularJS &nbsp;&nbsp;</a><br/>
+            &nbsp;<br/>
+            <a href="oauth2/index.html">OAuth 2.0 Tutorial &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="distributedSystems" class="categoryBlock">
+            <div class="categoryHeader">Distributed Systems Architecture</div>
+
+            <a href="software-architecture/index.html">Software Architecture &nbsp;&nbsp;</a><br/>
+            <a href="data-streaming/index.html">Data Streaming &nbsp;&nbsp;</a><br/>
+            <a href="rion/index.html">RION &nbsp;&nbsp;</a><br/>
+            <a href="iap/index.html">IAP &nbsp;&nbsp;</a><br/>
+            <a href="iap-tools-java/index.html">IAP Tools for Java&nbsp;&nbsp;</a><br/>
+            <a href="grid-ops-java/index.html">Grid Ops for Java&nbsp;&nbsp;</a><br/>
+            <a href="soa/index.html">SOA - Service Oriented Architecture &nbsp;&nbsp;</a><br/>
+            <a href="web-services/index.html">Web Services &nbsp;&nbsp;</a><br/>
+            <a href="soap/index.html">SOAP &nbsp;&nbsp;</a><br/>
+            <a href="wsdl/index.html">WSDL 2.0 &nbsp;&nbsp;</a><br/>
+            <a href="rsync/index.html">RSync &nbsp;&nbsp;</a><br/>
+            <a href="p2p/index.html">Peer-to-Peer (P2P) Networks &nbsp;&nbsp;</a><br/>
+
+        </div>
+
+        <div id="server" class="categoryBlock">
+            <div class="categoryHeader">Server</div>
+            <a href="ubuntu/ubuntu-linux-as-web-server.html">Ubuntu Linux as Web Server&nbsp;&nbsp;</a><br/>
+            <a href="nginx/index.html">Nginx &nbsp;&nbsp;</a><br/>
+            <a href="openssl/openssl-for-web-servers.html">OpenSSL for Web Servers&nbsp;&nbsp;</a><br/>
+            <a href="docker/index.html">Docker &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="dataFormats" class="categoryBlock">
+            <div class="categoryHeader">Data Formats</div>
+            <a href="unicode/index.html">Unicode&nbsp;&nbsp;</a><br/>
+            <a href="rion/index.html">RION &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="android" class="categoryBlock">
+            <div class="categoryHeader">Android</div>
+
+            <a href="/android/index.html">Android Development &nbsp;&nbsp;</a><br/>
+
+        </div>
+
+
+        <a name="misc"></a>
+        <div id="miscTitle" class="bigCategory card">Miscellaneous</div>
+
+
+        <div id="softwareDevelopment" class="categoryBlock">
+            <div class="categoryHeader">Software Development</div>
+
+            <a href="software-as-career/index.html">Software as Career</a><br/>
+            <a href="software-elegance/index.html">Software Elegance</a><br/>
+            <a href="api-design/index.html">API Design </a><br/>
+            <a href="dependency-injection/index.html">Dependency Injection</a> <br/>
+            <a href="ood/index.html">OOP / OOD</a>  <br/>
+            <a href="exception-handling-strategies/index.html">Exception Handling Strategies</a> <br/>
+        </div>
+
+        <div id="dataScience" class="categoryBlock">
+            <div class="categoryHeader">Data Science</div>
+            <a href="data-streaming/index.html">Data Streaming &nbsp;&nbsp;</a><br/>
+            <a href="data-science/index.html">Data Science &nbsp;&nbsp;</a><br/>
+            <a href="mathematical-analysis/index.html">Mathematical Analysis &nbsp;&nbsp;</a><br/>
+            <a href="r/index.html">R Programming &nbsp;&nbsp;</a><br/>
+            <a href="nanosai-studio/index.html">Nanosai Studio &nbsp;&nbsp;</a><br/>
+        </div>
+
+        <div id="developmentTools" class="categoryBlock">
+            <div class="categoryHeader">Development Tools</div>
+            <a href="/git/index.html">Git &nbsp;&nbsp;</a><br/>
+
+        </div>
+
+        <div id="softwareEntrepreneurship" class="categoryBlock">
+            <div class="categoryHeader">Software Entrepreneurship</div>
+
+            <a href="software-entrepreneurship.html">Software Entrepreneurship &nbsp;&nbsp;</a><br/>
+
+        </div>
+
+        <div id="opinion" class="categoryBlock">
+            <div class="categoryHeader">Opinion</div>
+            <a href="/opinion/index.html">Opinions on software development</a> <br/>
+
+        </div>
+
+        <div id="relatedResources" class="categoryBlock">
+            <div class="categoryHeader">Related Resources</div>
+
+            <a href="related-resources.html">Related Resources (Links) </a> <br/>
+
+        </div>
+
+
+
+    <div class="right">
+        <div class="bigCategory card">News</div>
+
+        <div class="card cardRight cardTop cardBottom">
+            
+<div class="body">
+         <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-concurrency/deadlock.html">Deadlock in Java </a></p>
+                        <p>
+Deadlock is when two or more threads end up blocked indefinitely waiting for each other to release resources they need to lock to do their job. I have updated the Deadlock tutorial.                        </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-util-concurrent/executorservice.html">Java ExecutorService </a></p>
+                        <p>
+The Java ExecutorService is a thread pool built into Java. I have update the Java ExecutorService tutorial, including added a new video version of this tutorial.                         </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/javafx/tableview.html">JavaFX TableView - Editable Cells </a></p>
+                        <p>
+I have updated my JavaFX TableView tutorial to explain how to make table cells editable.                         </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-util-concurrent/lock.html">Java Lock </a></p>
+                        <p>
+The Java Lock interface represents an lock which can make sure only one thread can lock it at a time - similarly to how a Java synchronized blocks works - only more flexible.                         </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-concurrency/thread-pools.html">Thread Pools in Java </a></p>
+                        <p>
+Thread pools are an alternative to creative one thread per task to execute. In this thread pool tutorial I explain how thread pools work, as well as how to implement your own in Java. I have also added a video version of this tutorial.                         </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/javafx/transformation.html">JavaFX Transformations </a></p>
+                        <p>
+You can apply transformations such as rotation, translation and scaling to all JavaFX controls. This JavaFX transformations tutorial explains how JavaFX transformations work.                        </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/javafx/button.html">JavaFX Button </a></p>
+                        <p>
+The JavaFX Button class provides a button that users of your JavaFX app can click on. I have updated my JavaFX Button tutorial to explain how to use a Button from within JavaFX FXML.                        </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-concurrency/concurrency-vs-parallelism.html">Concurrency vs Parallelism </a></p>
+                        <p>
+Concurrency and parallelism are two similar, yet different concepts. I have rewritten this tutorial to better explain the difference between concurrency and parallelism - plus I have added a video version of this tutorial.                        </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/javafx/fonts.html">JavaFX Fonts </a></p>
+                        <p>
+The JavaFX Font class enables you to load and use different fonts in your JavaFX applications.                        </p>
+
+                    </div>
+                </div>
+            </div>
+     <div jqc-cell="0:12c 2:6c 3:3c">
+                <div class="news">
+                     <div class="body">
+                        <p><a href="http://tutorials.jenkov.com/java-exception-handling/index.html">Java Exception Handling </a></p>
+                        <p>
+I have updated my introduction to Java Exception Handling - the way you handle errors and exceptions in Java.                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+</div>
+        </div>
+    </div>
+    <div class="footer">
+        <div id="footerCopyright">Copyright Jenkov Aps</div>
+        &nbsp; <!--win:  (<span id="windowDimensions"></span>)
+        &nbsp; grid: (<span id="gridDimensions"></span>) -->
+    </div>
+</div>
+
+<!--
+<script>
+wwidth  = window.innerWidth;
+wheight = window.innerHeight;
+
+document.getElementById("windowDimensions").innerHTML = "" + wwidth + ", " + wheight;
+
+
+gwidth  = document.getElementById("grid").getBoundingClientRect().width;
+gheight = document.getElementById("grid").getBoundingClientRect().height;
+
+document.getElementById("gridDimensions").innerHTML = "" + gwidth + ", " + gheight;
+</script>
+-->
+
+
+<!-- Google Analytics Script -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  //ga('create', 'UA-4036229-3', 'auto');
+  ga('create', 'UA-4036229-3', { 'storage': 'none' });
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+</html>

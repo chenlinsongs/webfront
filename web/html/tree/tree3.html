@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<style>
+    .div-level-1
+    {
+        /*position: relative;*/
+        /*background-color: #cccccc;*/
+        /*height: 30px;*/
+        width: 100px;
+    }
+    .div-level-2
+    {
+        background-color: #836363;
+        height: 30px;
+        width: 100px;
+    }
+    .div-level-3
+    {
+        background-color: #cccccc;
+        height: 30px;
+        width: 100px;
+    }
+
+    .div-level-1-p-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+    .div-level-2-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .ol-level-2{
+        padding-left: 0px;
+    }
+    .ol-level-3{
+        padding-left: 0px;
+    }
+    .p111 {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .div-level-1-div {
+        margin-left: 20px;
+    }
+    .ls2{
+        margin-left: 20px;
+    }
+    .div-level-3-div{
+        margin-left: 20px;
+    }
+    .p1111{
+        margin: 0px;
+    }
+</style>
+
+<ol style="list-style-type:none;">
+    <li class="l1">
+        <div class="div-level-1">
+            <div>
+                <img src="../image/close.png" style="display: inline-block"/>
+                <p class="div-level-1-p-name" style="display: inline-block">d1</p>
+            </div>
+            <div class="div-level-1-div">
+                <div>
+                    <img src="../image/close.png" style="display: inline-block"/>
+                    <p class="div-level-2-name" style="display: inline-block">d11</p>
+                </div>
+                <div>
+                    <ol style="list-style-type:none;" class="ol-level-2">
+                        <li class="ll2 ls2">
+                            <div class="div-level-2-div">
+                                <div>
+                                    <img src="../image/close.png" style="display: inline-block"/>
+                                    <p class="p111" style="display: inline-block">d111</p>
+                                </div>
+                                <div class="div-level-3-div">
+                                    <ol style="list-style-type:none;background-color: #333399;" class="ol-level-3">
+                                        <li class="ll21">
+                                            <div>
+<!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p class="p1111" style="display: inline-block">d1111</p>
+                                            </div>
+
+                                        </li>
+                                        <li class="ll22">
+                                            <div>
+<!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p class="p1111" style="display: inline-block">d1111</p>
+                                            </div>
+
+                                        </li>
+                                        <li class="ll23">
+                                            <div>
+<!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <p class="p1111" style="display: inline-block">d1111</p>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="ll3 ls2">
+                            <p class="p111">d112</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="l2">
+        <div class="div-level-2">
+            <p>d1</p>
+        </div>
+    </li>
+    <li class="l3">
+        <div class="div-level-3">
+            <p>d1</p>
+        </div>
+    </li>
+</ol>
+
+<script>
+
+    $(document).ready(function() {
+
+        //DOM manipulation code
+        $('p').click(function (el){
+            console.log(el.target.innerText)
+            const p = el.target;
+            const sibling = $(p).parent().siblings();
+            const img = $(p).siblings();
+            if (sibling.length > 0){
+                const child = sibling[0];
+                console.log(child)
+                const display = $(child).css('display');
+                console.log("display")
+                console.log(display)
+                if ("DIV" == $(child).prop('nodeName') && "none" != display){
+                    //close
+                    console.log("DIV")
+                    $(child).attr("old-display",display)
+                    $(child).css('display','none');
+                    $(img).attr("src","../image/close.png")
+
+                }else {
+                    //open
+                    const oldDisplay = $(child).attr("old-display")
+                    $(child).css('display',oldDisplay);
+                    console.log("NOT DIV")
+                    //获取img,改变img的形状
+                    $(img).attr("src","../image/open.png")
+
+                }
+
+            }else {
+                console.log("无孩节点")
+            }
+
+            // alert(el.target.innerText);
+        });
+
+    });
+</script>
+</body>
+</html>

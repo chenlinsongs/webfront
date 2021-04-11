@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    span {
+        display: flex;
+        background: yellow;
+    }
+    span + span {
+        font-size: 3em;
+    }
+    span:after {
+        content: '';
+        flex: 1;
+        border-bottom: 0.1em solid;
+        /*margin-bottom: 0.25em;*/
+    }
+    div {
+        background: #d24d4d;
+        width: 240px;
+        height: 200px;
+        margin: 20px;
+        color: #6d5050;
+        /*resize: vertical;*/
+        overflow: auto;
+    }
+    .test {
+        height: 100%;
+        width: 100%;
+        vertical-align: middle;
+    }
+</style>
+<span>Some text</span>
+<div>
+    <span class="test">Some text</span>
+</div>
+</body>
+</html>

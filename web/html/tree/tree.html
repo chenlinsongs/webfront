@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .hierarchy-1
+    {
+        /*position: relative;*/
+        /*background-color: #cccccc;*/
+        /*height: 30px;*/
+        width: 100px;
+    }
+
+    .hierarchy-2 {
+        margin-left: 20px;
+    }
+
+    .hierarchy-3{
+        margin-left: 20px;
+    }
+
+    .div-level-2
+    {
+        background-color: #836363;
+        height: 30px;
+        width: 100px;
+    }
+    .div-level-3
+    {
+        background-color: #cccccc;
+        height: 30px;
+        width: 100px;
+    }
+
+    .div-level-1-p-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+    .div-level-2-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .ol-level-2{
+        padding-left: 0px;
+    }
+    .ol-level-3{
+        padding-left: 0px;
+    }
+    .p111 {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .ls2{
+        margin-left: 20px;
+    }
+</style>
+
+<ol style="list-style-type:none;">
+    <li class="l1">
+        <div class="hierarchy-1">
+            <p class="div-level-1-p-name">d1</p>
+            <div class="hierarchy-2">
+                <p class="div-level-2-name">d11</p>
+                <ol style="list-style-type:none;" class="ol-level-2">
+                    <li class="ll2 ls2">
+                        <div>
+                            <p class="p111">d111</p>
+                            <div class="hierarchy-3">
+                                <ol style="list-style-type:none;background-color: #333399;" class="ol-level-3">
+                                    <li class="ll21">d1111</li>
+                                    <li class="ll22">d1111</li>
+                                    <li class="ll23">d1111</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="ll3 ls2">
+                        <p class="p111">d112</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </li>
+    <li class="l2">
+        <div class="div-level-2">
+            <p>d1</p>
+        </div>
+    </li>
+    <li class="l3">
+        <div class="div-level-3">
+            <p>d1</p>
+        </div>
+    </li>
+</ol>
+
+</body>
+</html>

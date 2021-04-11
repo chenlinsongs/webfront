@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!-- class=title的div可以点击 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<style>
+
+    .div-level-1-p-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+    .div-level-2-name {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .ol-level-2{
+        padding-left: 0px;
+    }
+    .ol-level-3{
+        padding-left: 0px;
+    }
+    .p111 {
+        background-color: #dd0202;
+        margin: 0px;
+    }
+
+    .div-level-1-div {
+        margin-left: 20px;
+    }
+    .ls2{
+        margin-left: 20px;
+    }
+    .div-level-3-div{
+        margin-left: 20px;
+    }
+    .p1111{
+        margin: 0px;
+    }
+    .title{
+        height: 30px;
+        /*background-color: lemonchiffon;*/
+        margin: 2px;
+    }
+    .title::before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        /*width: 30px;*/
+        margin: 0px;
+        vertical-align: middle;
+    }
+    /*.title div {*/
+    /*    display: inline-block;*/
+    /*    vertical-align:  middle;*/
+    /*    !*margin: 0;*!*/
+    /*    !*paadding: 20px;*!*/
+    /*    !*background: black;*!*/
+    /*}*/
+    .uk-icon-plus-square-o:before {
+        content: "\f196";
+        font-family: FontAwesome;
+        display: inline-block;
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+    }
+    .uk-icon-minus-square-o:before {
+        content: "\f147";
+        font-family: FontAwesome;
+        display: inline-block;
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+    }
+
+</style>
+
+<ol style="list-style-type:none;">
+    <li >
+        <div>
+            <div class="title">
+<!--                <img src="../image/close.png" style="display: inline-block"/>-->
+                <i class="uk-icon-plus-square-o" ></i>
+                <span class="div-level-1-p-name" style="display: inline-block">d1</span>
+            </div>
+            <div class="div-level-1-div">
+                <div class="title">
+<!--                    <img src="../image/close.png" style="display: inline-block"/>-->
+                    <i class="uk-icon-minus-square-o" style="display: inline-block"></i>
+                    <span class="div-level-2-name" style="display: inline-block">d11</span>
+                </div>
+                <div>
+                    <ol style="list-style-type:none;" class="ol-level-2">
+                        <li class="ll2 ls2">
+                            <div class="div-level-2-div">
+                                <div class="title">
+<!--                                    <img src="../image/close.png" style="display: inline-block"/>-->
+                                    <i class="uk-icon-minus-square-o" style="display: inline-block"></i>
+                                    <span class="p111" style="display: inline-block">d111</span>
+                                </div>
+                                <div class="div-level-3-div">
+                                    <ol style="list-style-type:none;" class="ol-level-3">
+                                        <li class="ll21">
+                                            <div class="title">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <span class="p1111" style="display: inline-block">d1111</span>
+                                            </div>
+
+                                        </li>
+                                        <li class="ll22">
+                                            <div class="title">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <span class="p1111" style="display: inline-block">d1111</span>
+                                            </div>
+
+                                        </li>
+                                        <li class="ll23">
+                                            <div class="title">
+                                                <!--                                                <img src="../image/close.png" style="display: inline-block"/>-->
+                                                <span class="p1111" style="display: inline-block">d1111</span>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </li>
+</ol>
+
+<script>
+
+    $(document).ready(function() {
+
+        //DOM manipulation code
+        $('.title').click(function (el){
+            console.log(el.target.innerText)
+            const div = el.target;
+            const sibling = $(div).siblings();
+            if (sibling.length > 0){
+
+                const titleChild = $(div).children();
+                const img = titleChild[0];
+
+                const child = sibling[0];
+                console.log(child)
+                const display = $(child).css('display');
+                console.log("display")
+                console.log(display)
+                if ("DIV" == $(child).prop('nodeName') && "none" != display){
+                    //close
+                    console.log("DIV")
+                    $(child).attr("old-display",display)
+                    $(child).css('display','none');
+                    // $(img).attr("src","../image/close.png")
+                    $(img).attr("class","uk-icon-plus-square-o")
+
+                }else {
+                    //open
+                    const oldDisplay = $(child).attr("old-display")
+                    $(child).css('display',oldDisplay);
+                    console.log("NOT DIV")
+                    //获取img,改变img的形状
+                    // $(img).attr("src","../image/open.png")
+                    $(img).attr("class","uk-icon-minus-square-o")
+
+
+                }
+
+            }else {
+                console.log("无孩节点")
+            }
+
+            // alert(el.target.innerText);
+        });
+
+    });
+</script>
+</body>
+</html>
